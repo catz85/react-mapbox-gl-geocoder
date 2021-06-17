@@ -24,7 +24,7 @@ class Geocoder extends Component {
     onChange = (event) => {
         const {timeout, queryParams, localGeocoder, limit, localOnly} = this.props;
         const queryString = event.target.value;
-
+        console.log(event.target.value)
         this.setState({
             inputValue: event.target.value
         });
@@ -48,7 +48,7 @@ class Geocoder extends Component {
         }, timeout);
     };
     onSelected = (item) => {
-        const {viewport, onSelected, transitionDuration, hideOnSelect, pointZoom, formatItem, updateInputOnSelect} = this.props;
+        const {viewport, onSelected, transitionDuration, hideOnSelect, pointZoom, formatItem, updateInputOnSelect, resetInput} = this.props;
         let newViewport = new WebMercatorViewport(viewport);
         const {bbox, center} = item;
 
@@ -68,7 +68,6 @@ class Geocoder extends Component {
         const {longitude, latitude, zoom} = newViewport;
 
         onSelected({...viewport, ...{longitude, latitude, zoom, transitionDuration}}, item);
-
         if (hideOnSelect) {
             this.setState({results: []});
         }
@@ -87,7 +86,12 @@ class Geocoder extends Component {
             this.setState({showResults: false});
         }, 300);
     };
-
+    resetInput = () => {
+        this.setState({inputValue: ''})
+    }
+    setInput = (value) => {
+        this.setState({inputValue: value})
+    }
     constructor(props) {
         super();
 
